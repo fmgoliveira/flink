@@ -2,11 +2,11 @@ import { VercelDomainResponse, VercelErrorResponse } from "./types";
 
 export async function addDomainToVercelProject(domain: string) {
   const response = await fetch(
-    `https://api.vercel.com/v9/projects/${process.env.VERCEL_PROJECT_ID}/domains?teamId=${process.env.VERCEL_TEAM_ID}`,
+    `https://api.vercel.com/v9/projects/${process.env.PROJECT_ID_VERCEL}/domains?teamId=${process.env.TEAM_ID_VERCEL}`,
     {
       body: `{\n  "name": "${domain}"\n}`,
       headers: {
-        Authorization: `Bearer ${process.env.VERCEL_AUTH_BEARER_TOKEN}`,
+        Authorization: `Bearer ${process.env.AUTH_BEARER_TOKEN_VERCEL}`,
         "Content-Type": "application/json",
       },
       method: "POST",

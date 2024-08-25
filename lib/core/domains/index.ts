@@ -51,11 +51,11 @@ export async function addDomainToUserAccount(
     if (response.verified) {
       // the domain is verified so let's check if it's misconfigured
       const response = await fetch(
-        `https://api.vercel.com/v6/domains/${domain}/config?teamId=${process.env.VERCEL_TEAM_ID}`,
+        `https://api.vercel.com/v6/domains/${domain}/config?teamId=${process.env.TEAM_ID_VERCEL}`,
         {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${process.env.VERCEL_AUTH_BEARER_TOKEN}`,
+            Authorization: `Bearer ${process.env.AUTH_BEARER_TOKEN_VERCEL}`,
             "Content-Type": "application/json",
           },
         }
@@ -144,21 +144,21 @@ export const checkDomainStatus = async (
 
   const [configResponse, domainResponse] = await Promise.all([
     fetch(
-      `https://api.vercel.com/v6/domains/${domain}/config?teamId=${process.env.VERCEL_TEAM_ID}`,
+      `https://api.vercel.com/v6/domains/${domain}/config?teamId=${process.env.TEAM_ID_VERCEL}`,
       {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${process.env.VERCEL_AUTH_BEARER_TOKEN}`,
+          Authorization: `Bearer ${process.env.AUTH_BEARER_TOKEN_VERCEL}`,
           "Content-Type": "application/json",
         },
       }
     ),
     fetch(
-      `https://api.vercel.com/v9/projects/${process.env.VERCEL_PROJECT_ID}/domains/${domain}?teamId=${process.env.VERCEL_TEAM_ID}`,
+      `https://api.vercel.com/v9/projects/${process.env.PROJECT_ID_VERCEL}/domains/${domain}?teamId=${process.env.TEAM_ID_VERCEL}`,
       {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${process.env.VERCEL_AUTH_BEARER_TOKEN}`,
+          Authorization: `Bearer ${process.env.AUTH_BEARER_TOKEN_VERCEL}`,
           "Content-Type": "application/json",
         },
       }
