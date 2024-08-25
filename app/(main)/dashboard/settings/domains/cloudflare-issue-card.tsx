@@ -8,7 +8,7 @@ const CloudflareIssuesCard = () => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="mt-3 w-full overflow-hidden rounded-xl bg-white shadow-md">
+    <div className="mt-3 w-full overflow-hidden rounded-xl bg-neutral-800 shadow-md">
       <div
         className="flex cursor-pointer items-center justify-between p-4"
         onClick={() => setIsExpanded(!isExpanded)}
@@ -20,7 +20,7 @@ const CloudflareIssuesCard = () => {
           animate={{ rotate: isExpanded ? 180 : 0 }}
           transition={{ duration: 0.3 }}
         >
-          <ChevronDown className="h-6 w-6 text-neutral-600" />
+          <ChevronDown className="h-6 w-6 text-neutral-400" />
         </motion.div>
       </div>
       <motion.div
@@ -32,15 +32,15 @@ const CloudflareIssuesCard = () => {
         }}
         transition={{ duration: 0.3 }}
       >
-        <div className="border-t border-neutral-200 bg-neutral-50 p-4">
-          <p className="text-neutral-700">
+        <div className="border-t border-neutral-700 p-4">
+          <p className="text-neutral-300">
             To resolve this issue, set the &quot;SSL/TLS&quot; option in Cloudflare to
             &quot;Full&quot;.
             <br /> Please follow this instruction to rectify the issue and refer
             to the guidelines below when adding another domain.
           </p>
 
-          <p className="mt-5 text-neutral-700">
+          <p className="mt-5 text-neutral-300">
             <b>Using Cloudflare as a DNS provider?</b>
             <ol className="list-inside list-decimal">
               <li>In your Cloudflare dashboard, add the provided record.</li>
