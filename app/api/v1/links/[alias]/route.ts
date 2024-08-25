@@ -2,7 +2,6 @@ import { getLinkByAlias } from "@/lib/core/links";
 import { validateAndGetToken } from "../../utils";
 
 import type { NextRequest } from "next/server";
-import { useSearchParams } from "next/navigation";
 
 export async function GET(
   request: NextRequest,
@@ -10,7 +9,8 @@ export async function GET(
 ) {
   const alias = params.alias;
   const domain =
-    useSearchParams().get("domain") || process.env.NEXT_PUBLIC_SHORT_DOMAIN!;
+    request.nextUrl.searchParams.get("domain") ||
+    process.env.NEXT_PUBLIC_SHORT_DOMAIN!;
   const apiKey = request.headers.get("x-api-key");
 
   const token = await validateAndGetToken(apiKey);

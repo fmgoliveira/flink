@@ -1,16 +1,17 @@
 import { aggregateVisits } from "@/lib/core/analytics/utils";
 
 import { getLinkByAlias, getLinkVisits } from "@/lib/core/links";
-import { useSearchParams } from "next/navigation";
+import { NextRequest } from "next/server";
 import { validateAndGetToken } from "../../utils";
 
 export async function GET(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { alias: string } }
 ) {
   const alias = params.alias;
   const domain =
-    useSearchParams().get("domain") || process.env.NEXT_PUBLIC_SHORT_DOMAIN!;
+    request.nextUrl.searchParams.get("domain") ||
+    process.env.NEXT_PUBLIC_SHORT_DOMAIN!;
   const apiKey = request.headers.get("x-api-key");
 
   const token = await validateAndGetToken(apiKey);
