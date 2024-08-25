@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Link {
+  id                 String            @id @default(auto()) @map("_id") @db.ObjectId
+  alias              String            
+  url                String
+  keepPath           Boolean           @default(false)
+  visits             LinkVisit[]
+  uniqueVisits       UniqueLinkVisit[]
+  createdAt          DateTime          @default(now())
+  disableAfterClicks Int?
+  disableAfterDate   DateTime?
+  disabled           Boolean           @default(false)
+  passwordHash       String?
+  userId             String
+  domain             String?
+  domainDoc          CustomDomain?     @relation(fields: domain, references: domain)
+}
+
+model LinkVisit {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  linkId    String   @db.ObjectId
+  link      Link     @relation(fields: linkId, references: id)
+  createdAt DateTime @default(now())
+  referer   String?
+  ip        String?
+  country   String?
+  city      String?
+  continent String?
+  device    String?
+  browser   String?
+  os        String?
+  model     String?
+}
+
+model UniqueLinkVisit {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  linkId    String   @db.ObjectId
+  link      Link     @relation(fields: linkId, references: id)
+  ipHash    String
+  createdAt DateTime @default(now())
+}
+
+model CustomDomain {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  domain              String   @unique
+  userId              String
+  createdAt           DateTime @default(now())
+  status              String
+  verificationDetails Json
+  links               Link[]
+}
+
+model Token {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String
+  token     String
+  createdAt DateTime @default(now())
+}
