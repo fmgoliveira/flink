@@ -119,9 +119,18 @@ export default function UpdateLinkModal({
                   <FormLabel>Link Alias</FormLabel>
                   <FormControl>
                     <section className="flex items-center">
-                      <Select>
+                      <Select
+                        defaultValue={
+                          link.domain || process.env.NEXT_PUBLIC_SHORT_DOMAIN
+                        }
+                      >
                         <SelectTrigger className="w-max rounded-br-none rounded-tr-none">
-                          <SelectValue placeholder="ishortn.ink" />
+                          <SelectValue
+                            placeholder={
+                              link.domain ||
+                              process.env.NEXT_PUBLIC_SHORT_DOMAIN
+                            }
+                          />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
