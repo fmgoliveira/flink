@@ -64,7 +64,7 @@ export function ChangeLinkPasswordModal({
       }
     } catch (error) {
       console.log(error);
-      toast.error(componentMessages.loadingError);
+      toast.error(`componentMessages.loadingError: ${error}`);
     } finally {
       setLoading(false);
     }

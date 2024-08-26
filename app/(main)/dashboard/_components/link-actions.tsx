@@ -46,7 +46,7 @@ export const LinkActions = ({ link }: LinkActionsProps) => {
       }
     } catch (error) {
       console.log(error);
-      toast.error("Failed to toggle link status");
+      toast.error(`Failed to toggle link status: ${error}`);
     } finally {
       setLoading(false);
     }
@@ -62,7 +62,7 @@ export const LinkActions = ({ link }: LinkActionsProps) => {
       }
     } catch (error) {
       console.log(error);
-      toast.error("Failed to delete link");
+      toast.error(`Failed to delete link: ${error}`);
     } finally {
       setLoading(false);
     }
@@ -78,7 +78,7 @@ export const LinkActions = ({ link }: LinkActionsProps) => {
       }
     } catch (error) {
       console.log(error);
-      toast.error("Failed to reset link statistics");
+      toast.error(`Failed to reset link statistics: ${error}`);
     } finally {
       setLoading(false);
     }

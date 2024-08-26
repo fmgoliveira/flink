@@ -28,7 +28,7 @@ const TokenCard = ({
       }
     } catch (error) {
       console.log(error);
-      toast.error("Failed to revoke token key.");
+      toast.error(`Failed to revoke token key: ${error}`);
     } finally {
       setLoading(false);
     }

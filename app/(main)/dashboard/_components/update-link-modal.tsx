@@ -82,7 +82,7 @@ export default function UpdateLinkModal({
       }
     } catch (error) {
       console.log(error);
-      toast.error("Failed to updated link");
+      toast.error(`Failed to updated link: ${error}`);
     } finally {
       setLoading(false);
     }

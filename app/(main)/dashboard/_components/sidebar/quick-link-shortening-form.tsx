@@ -25,8 +25,9 @@ export function QuickLinkShorteningForm() {
       await shortenLinkWithAutoAlias(userId!, { url });
       toast.success("Your link has been shortened");
       await revalidateHomepage();
-    } catch {
-      toast.error("Something went wrong while shortening your link");
+    } catch (error) {
+      console.log(error);
+      toast.error(`Something went wrong while shortening your link: ${error}`);
     } finally {
       setLoading(false);
     }

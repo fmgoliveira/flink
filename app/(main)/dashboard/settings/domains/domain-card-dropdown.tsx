@@ -51,7 +51,7 @@ export function DomainCardDropdown({ domainId }: DomainCardDropdownProps) {
       }
     } catch (error) {
       console.log(error);
-      toast.error("Failed to delete domain");
+      toast.error(`Failed to delete domain: ${error}`);
     } finally {
       setIsDeleteDialogOpen(false);
       setLoading(false);

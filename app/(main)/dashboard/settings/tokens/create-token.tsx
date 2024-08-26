@@ -35,7 +35,7 @@ const GenerateTokenTrigger = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error("Failed to create API key");
+      toast.error(`Failed to create API key: ${error}`);
     } finally {
       setLoading(false);
     }

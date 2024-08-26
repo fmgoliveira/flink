@@ -29,7 +29,7 @@ export default function DomainStatusChecker({
         onStatusChange(result.status as "pending" | "active" | "invalid");
     } catch (error) {
       console.log(error);
-      toast.error("Something went wrong. Please try again later.");
+      toast.error(`Something went wrong: ${error}`);
     } finally {
       setIsChecking(false);
     }

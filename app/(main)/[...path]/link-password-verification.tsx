@@ -39,8 +39,9 @@ export const LinkPasswordVerification = ({
       toast.success("Password verified. Redirecting...");
 
       router.push(result.keepPath ? `${result.url}/${path || ""}` : result.url);
-    } catch {
-      toast.error("Something went wrong");
+    } catch (error) {
+      console.log(error);
+      toast.error(`Something went wrong: ${error}`);
     } finally {
       setLoading(false);
     }

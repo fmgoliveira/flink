@@ -59,7 +59,7 @@ export function AddCustomDomainModal() {
       }
     } catch (error) {
       console.log(error);
-      toast.error("Failed to add domain");
+      toast.error(`Failed to add domain: ${error}`);
     } finally {
       setLoading(false);
     }
@@ -100,8 +100,8 @@ export function AddCustomDomainModal() {
             variants={itemVariants}
             className="mt-1 text-sm text-yellow-600"
           >
-            Tip: If there&apos;s already content on your domain, consider using a
-            subdomain like &quot;links.example.com&quot;.
+            Tip: If there&apos;s already content on your domain, consider using
+            a subdomain like &quot;links.example.com&quot;.
           </motion.div>
           <motion.div
             variants={itemVariants}
@@ -111,7 +111,8 @@ export function AddCustomDomainModal() {
             <ul className="list-disc space-y-1 pl-5">
               <li>Ensure you own or have permission to use this domain.</li>
               <li>
-                You&apos;ll need to configure DNS settings after adding the domain.
+                You&apos;ll need to configure DNS settings after adding the
+                domain.
               </li>
               <li>Verification may take up to 24 hours to complete.</li>
             </ul>
