@@ -41,10 +41,12 @@ export default async function DashboardPage({ searchParams }: Props) {
         <h2 className="text-xl font-semibold leading-tight text-neutral-300">
           Links
         </h2>
-        <Button>
-          <PlusIcon className="h-4 w-4 mr-2" />
-          <Link href="/dashboard/link/new">Shorten Link</Link>
-        </Button>
+        <Link href="/dashboard/link/new">
+          <Button>
+            <PlusIcon className="h-4 w-4 mr-2" />
+            Shorten Link
+          </Button>
+        </Link>
       </div>
 
       <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-11">
