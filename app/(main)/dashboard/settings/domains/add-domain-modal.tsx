@@ -54,6 +54,7 @@ export function AddCustomDomainModal() {
       const result = await createDomain(domain);
       if (result) {
         toast.success("Your domain has been added successfully");
+        setIsOpen(false);
         await revalidateRoute("/dashboard/settings/domains");
       }
     } catch (error) {

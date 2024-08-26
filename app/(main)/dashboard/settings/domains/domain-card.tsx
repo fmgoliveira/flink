@@ -97,34 +97,6 @@ export default function DomainCard({ domain }: DomainCardProps) {
           )}
         </CardDescription>
 
-        {domain.status === "selfhosted" && (
-          <CardContent className="px-0 pt-6">
-            <Alert className="mb-7">
-              <AlertDescription>
-                Warning: This application is design to be hosted on Vercel.
-                Domain validation is not yet supported for self-hosted
-                applications.
-              </AlertDescription>
-            </Alert>
-            <div className="space-y-4">
-              <div>
-                <h3 className="mb-2 font-semibold">Instructions</h3>
-                <ol className="list-inside list-decimal space-y-2">
-                  <li>
-                    Make sure the domain is pointing to your machine IP. (Either
-                    use an A or AAAA record)
-                  </li>
-                  <li>
-                    If you are using a reverse proxy, such as Nginx, make sure
-                    it is configured correctly and it&apos;s pointing to the
-                    application endpoint.
-                  </li>
-                </ol>
-              </div>
-            </div>
-          </CardContent>
-        )}
-
         {domain.status === "invalid" || domain.status === "pending" ? (
           <CardContent className="px-0 pt-6">
             <Alert className="mb-7">
