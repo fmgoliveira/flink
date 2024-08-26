@@ -47,34 +47,33 @@ export const getLinks = async (userId: string, input: ListLinksInput) => {
       userId: true,
       visits: true,
     },
+    orderBy:
+      orderBy === "totalClicks"
+        ? {
+            visits: {
+              _count: orderDirection,
+            },
+          }
+        : {
+            createdAt: orderDirection,
+          },
+    take: pageSize || 10,
+    skip: (page - 1) * (pageSize || 10),
   });
 
-  const sortedLinks = links.sort((a, b) => {
-    const sort = orderBy ?? "createdAt";
-    switch (sort) {
-      case "createdAt":
-        if (
-          new Date(a.createdAt || new Date()).getTime() <
-          new Date(b.createdAt || new Date()).getTime()
-        )
-          return orderDirection === "asc" ? -1 : 1;
-        return 0;
-
-      case "totalClicks":
-        if (a.visits.length < b.visits.length)
-          return orderDirection === "asc" ? -1 : 1;
-        return 0;
-
-      default:
-        return 0;
-    }
+  const allLinks = await prisma.link.findMany({
+    where: { userId },
+    select: {
+      id: true,
+      visits: true,
+    },
   });
 
-  const totalLinks = links.length ?? 0;
-  const totalClicks = links.map((l) => l.visits).flat().length ?? 0;
+  const totalLinks = allLinks.length ?? 0;
+  const totalClicks = allLinks.map((l) => l.visits).flat().length ?? 0;
 
   return {
-    links: sortedLinks,
+    links,
     totalLinks,
     totalClicks,
     currentPage: page,
