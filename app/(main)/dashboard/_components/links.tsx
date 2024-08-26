@@ -106,9 +106,9 @@ const Links = (
       </motion.div>
 
       {totalPages > 1 && (
-        <div className="sticky bottom-2 z-10 mt-6 flex items-center justify-between rounded-md border bg-neutral-100 px-4 py-3 shadow-sm">
+        <div className="sticky bottom-2 z-10 mt-6 flex items-center justify-between rounded-md border bg-neutral-900 px-4 py-3 shadow-sm">
           <div className="flex items-center">
-            <p className="text-sm text-neutral-500">
+            <p className="text-sm text-neutral-400">
               Page {currentPage} of {totalPages} of {totalLinks} links
             </p>
           </div>
