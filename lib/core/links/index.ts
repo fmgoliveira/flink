@@ -168,10 +168,13 @@ export const createLink = async (userId: string, input: CreateLinkInput) => {
   return link;
 };
 
-export const updateLink = async (userId: string, input: UpdateLinkInput) => {
+export const updateLink = async (
+  userId: string,
+  { id, ...input }: UpdateLinkInput
+) => {
   const oldLink = await prisma.link.findFirst({
     where: {
-      id: input.id,
+      id,
       userId,
     },
   });
@@ -180,7 +183,7 @@ export const updateLink = async (userId: string, input: UpdateLinkInput) => {
 
   const updatedLink = await prisma.link.update({
     where: {
-      id: input.id,
+      id,
       userId,
     },
     data: input,
@@ -194,6 +197,8 @@ export const updateLink = async (userId: string, input: UpdateLinkInput) => {
     constructCacheKey(updatedLink.domain, updatedLink.alias),
     updatedLink
   );
+
+  return updatedLink;
 };
 
 export const deleteLink = async (userId: string, input: GetLinkInput) => {
@@ -208,6 +213,8 @@ export const deleteLink = async (userId: string, input: GetLinkInput) => {
   );
 
   await prisma.link.delete({ where: { id: linkToDelete.id, userId } });
+
+  return linkToDelete;
 };
 
 export const retrieveOriginalUrl = async (
@@ -228,7 +235,7 @@ export const retrieveOriginalUrl = async (
       },
     });
 
-    if (!link) return null;
+    if (!link || link.disabled) return null;
   }
 
   waitUntil(logAnalytics(headers, prisma, link));
@@ -317,6 +324,10 @@ export const toggleLinkStatus = async (userId: string, input: GetLinkInput) => {
   });
 
   if (!fetchedLink) return null;
+  if (!fetchedLink.disabled)
+    await cache.delete(
+      constructCacheKey(fetchedLink.domain, fetchedLink.alias)
+    );
 
   return await prisma.link.update({
     where: { id: fetchedLink.id, userId },

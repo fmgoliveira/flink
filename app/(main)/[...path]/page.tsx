@@ -1,9 +1,8 @@
 import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 
-import { LinkPasswordVerification } from "./link-password-verification";
-import { PrismaClient } from "@prisma/client";
 import { retrieveOriginalUrl } from "@/lib/core/links";
+import { LinkPasswordVerification } from "./link-password-verification";
 
 type LinkRedirectionPageProps = {
   params: {

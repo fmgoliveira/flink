@@ -7,7 +7,7 @@ import type { DeleteTokenInput } from "./token.input";
 function generateToken() {
   const alphabet =
     "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-  const nanoid = customAlphabet(alphabet, 29);
+  const nanoid = customAlphabet(alphabet, 32);
 
   return nanoid();
 }

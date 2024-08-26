@@ -78,6 +78,7 @@ export default function UpdateLinkModal({
       const result = await updateLinkHook(values);
       if (result) {
         toast.success("Link updated successfully");
+        setOpen(false);
         await revalidateHomepage();
       }
     } catch (error) {
@@ -119,13 +120,19 @@ export default function UpdateLinkModal({
                   <FormControl>
                     <section className="flex items-center">
                       <Select>
-                        <SelectTrigger className="w-max rounded-br-none rounded-tr-none bg-neutral-50">
+                        <SelectTrigger className="w-max rounded-br-none rounded-tr-none">
                           <SelectValue placeholder="ishortn.ink" />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
-                            <SelectItem value="ishortn.ink">
-                              ishortn.ink
+                            <SelectItem
+                              value={
+                                link.domain ||
+                                process.env.NEXT_PUBLIC_SHORT_DOMAIN!
+                              }
+                            >
+                              {link.domain ||
+                                process.env.NEXT_PUBLIC_SHORT_DOMAIN}
                             </SelectItem>
                           </SelectGroup>
                         </SelectContent>
