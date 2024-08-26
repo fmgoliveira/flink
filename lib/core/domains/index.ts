@@ -1,5 +1,4 @@
 import prisma from "@/prisma";
-import { PrismaClient } from "@prisma/client";
 import { CreateCustomDomainInput } from "./domains.input";
 import {
   VercelConfigResponse,
@@ -25,6 +24,19 @@ export async function addDomainToUserAccount(
     .replace("http://", "")
     .replace("https://", "")
     .replace("www.", "");
+
+  if (!process.env.VERCEL && !process.env.VERCEL_URL) {
+    await prisma.customDomain.create({
+      data: {
+        userId,
+        domain,
+        status: "selfhosted",
+        verificationDetails: JSON.stringify({}),
+      },
+    });
+
+    return { success: true };
+  }
 
   try {
     const response = await addDomainToVercelProject(domain);
@@ -78,16 +90,21 @@ export async function addDomainToUserAccount(
         verificationDetails: verificationDetails,
       },
     });
+
+    return { success: true };
   } catch (error) {
     throw new Error("Failed to add domain to Vercel project");
   }
-
-  return { success: true };
 }
 
 export async function getCustomDomainsForUser(userId: string) {
+  const usingVercel = !!process.env.VERCEL && !!process.env.VERCEL_URL;
+
   const customDomains = await prisma.customDomain.findMany({
-    where: { userId },
+    where: {
+      userId,
+      status: usingVercel ? { not: "selfhosted" } : "selfhosted",
+    },
   });
 
   return customDomains;
@@ -141,6 +158,15 @@ export const checkDomainStatus = async (
   input: { domain: string }
 ) => {
   const domain = input.domain;
+  const domainDoc = await prisma.customDomain.findFirst({
+    where: { domain: input.domain, userId },
+  });
+
+  if (domainDoc?.status === "selfhosted")
+    return {
+      status: domainDoc.status,
+      verificationChallenges: [],
+    };
 
   const [configResponse, domainResponse] = await Promise.all([
     fetch(

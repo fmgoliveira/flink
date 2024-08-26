@@ -18,6 +18,8 @@ The only self-hosted URL shortener that allows you to keep the path after the al
 ## TO-DO
 
 - [ ] Add QrCode generation
+- [ ] Add support for custom domains validation for non-vercel environments
+- [ ] Improve the design
 
 ## Credits
 

@@ -43,7 +43,7 @@ export default function DomainCard({ domain }: DomainCardProps) {
   }
 
   const handleStatusChange = async (
-    newStatus: "pending" | "active" | "invalid"
+    newStatus: "pending" | "active" | "invalid" | "selfhosted"
   ) => {
     setStatus(newStatus);
 
@@ -58,6 +58,9 @@ export default function DomainCard({ domain }: DomainCardProps) {
         <CardTitle className="flex items-center justify-between text-xl">
           <div className="flex items-center gap-2">
             {domain.domain}
+            {domain.status === "selfhosted" && (
+              <Badge variant="secondary">Self-hosted</Badge>
+            )}
             {domain.status === "pending" && (
               <Badge variant="destructive">Pending validation</Badge>
             )}
@@ -82,12 +85,45 @@ export default function DomainCard({ domain }: DomainCardProps) {
           </div>
         </CardTitle>
         <CardDescription>
-          {domain.status === "active" ? (
+          {domain.status === "selfhosted" ? (
+            <span>
+              The application is not running on Vercel, so it can&apos;t be
+              validated.{" "}
+            </span>
+          ) : domain.status === "active" ? (
             <span>Your domain is successfully connected. </span>
           ) : (
             <span>Please validate your domain before it can be used. </span>
           )}
         </CardDescription>
+
+        {domain.status === "selfhosted" && (
+          <CardContent className="px-0 pt-6">
+            <Alert className="mb-7">
+              <AlertDescription>
+                Warning: This application is design to be hosted on Vercel.
+                Domain validation is not yet supported for self-hosted
+                applications.
+              </AlertDescription>
+            </Alert>
+            <div className="space-y-4">
+              <div>
+                <h3 className="mb-2 font-semibold">Instructions</h3>
+                <ol className="list-inside list-decimal space-y-2">
+                  <li>
+                    Make sure the domain is pointing to your machine IP. (Either
+                    use an A or AAAA record)
+                  </li>
+                  <li>
+                    If you are using a reverse proxy, such as Nginx, make sure
+                    it is configured correctly and it&apos;s pointing to the
+                    application endpoint.
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </CardContent>
+        )}
 
         {domain.status === "invalid" || domain.status === "pending" ? (
           <CardContent className="px-0 pt-6">
@@ -98,7 +134,7 @@ export default function DomainCard({ domain }: DomainCardProps) {
                 site and potentially disrupt its functionality. Please exercise
                 caution when configuring this record. Ensure that the domain
                 specified in the TXT verification value is the one you intend to
-                use with ishortn.ink and not your production site.
+                use with fLink and not your production site.
               </AlertDescription>
             </Alert>
             <div className="space-y-4">
@@ -130,8 +166,8 @@ export default function DomainCard({ domain }: DomainCardProps) {
                   <li>Copy the record shown above.</li>
                   <li>
                     Go to your DNS provider and add a new record based on the
-                    type shown above. E.g. if it&apos;s a TXT record, add a new TXT
-                    record.
+                    type shown above. E.g. if it&apos;s a TXT record, add a new
+                    TXT record.
                   </li>
                   <li>Enter the domain and value shown above.</li>
                   <li>
@@ -139,8 +175,8 @@ export default function DomainCard({ domain }: DomainCardProps) {
                     to 48 hours).
                   </li>
                   <li>
-                    Once done, click the &quot;Verify&quot; button in the domain settings
-                    to confirm.
+                    Once done, click the &quot;Check Now&quot; button in the
+                    domain settings to confirm.
                   </li>
                 </ol>
               </div>
