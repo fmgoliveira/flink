@@ -46,6 +46,7 @@ export const getLinks = async (userId: string, input: ListLinksInput) => {
       url: true,
       userId: true,
       visits: true,
+      password: true,
     },
     orderBy:
       orderBy === "totalClicks"
