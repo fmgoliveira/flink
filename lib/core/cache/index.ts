@@ -62,5 +62,6 @@ function convertToLink(link: Record<string, string>): Link | null {
     keepPath: link.keepPath === "true",
     userId: link.userId!,
     domain: link.domain,
+    password: link.password,
   };
 }
