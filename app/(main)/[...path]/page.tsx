@@ -36,7 +36,6 @@ const LinkRedirectionPage = async ({ params }: LinkRedirectionPageProps) => {
     return (
       <LinkPasswordVerification
         id={link.id}
-        headers={headersList}
         path={path}
       />
     );

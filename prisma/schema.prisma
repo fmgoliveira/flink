@@ -28,6 +28,7 @@ model Link {
   userId             String
   domain             String?
   domainDoc          CustomDomain?     @relation(fields: domain, references: domain)
+  password           String?
 }
 
 model LinkVisit {
