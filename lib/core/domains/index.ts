@@ -144,7 +144,8 @@ export async function deleteDomainAndAssociatedLinks(
     // Delete the domain itself
     await tx.customDomain.delete({ where: { id: domainId } });
 
-    await deleteDomainFromVercelProject(domain.domain!);
+    if (process.env.VERCEL && process.env.VERCEL_URL)
+      await deleteDomainFromVercelProject(domain.domain!);
 
     return {
       success: true,

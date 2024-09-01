@@ -212,9 +212,13 @@ export const deleteLink = async (userId: string, input: GetLinkInput) => {
     constructCacheKey(linkToDelete.domain, linkToDelete.alias)
   );
 
-  await prisma.link.delete({ where: { id: linkToDelete.id, userId } });
+  return await prisma.$transaction(async (tx) => {
+    await tx.linkVisit.deleteMany({ where: { linkId: linkToDelete.id } });
+    await tx.uniqueLinkVisit.deleteMany({ where: { linkId: linkToDelete.id } });
+    await tx.link.delete({ where: { id: linkToDelete.id } });
 
-  return linkToDelete;
+    return linkToDelete;
+  });
 };
 
 export const retrieveOriginalUrl = async (
